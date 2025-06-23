@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ user_info.name }}'s CV</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-main">
+                <h1>{{ user_info.name | upper }}</h1>
+                <p class="subtitle">{{ cv_data.get('subtitle', 'Machine Learning | Data Science | NLP | RAG | Generative AI | LLMs') }}</p>
+            </div>
+            <div class="contact-info">
+                {% if user_info.phone %}<p>{{ user_info.phone }} <i class="fas fa-phone-alt"></i></p>{% endif %}
+                {% if user_info.email %}<p>{{ user_info.email }} <i class="fas fa-envelope"></i></p>{% endif %}
+                {% if user_info.linkedin %}<p><a href="{{ user_info.linkedin }}">{{ user_info.linkedin | replace('https://', '') | replace('www.', '') }}</a> <i class="fab fa-linkedin"></i></p>{% endif %}
+                {% if user_info.location %}<p>{{ user_info.location }} <i class="fas fa-map-marker-alt"></i></p>{% endif %}
+            </div>
+        </header>
+
+        <div class="main-content">
+            <div class="left-column">
+                {% if cv_data.experience %}
+                <section>
+                    <h2>WORK EXPERIENCE</h2>
+                    <div class="content">{{ cv_data.experience | markdown | safe }}</div>
+                </section>
+                {% endif %}
+
+                {% if cv_data.projects %}
+                <section>
+                    <h2>PROJECTS</h2>
+                    <div class="content">{{ cv_data.projects | markdown | safe }}</div>
+                </section>
+                {% endif %}
+            </div>
+
+            <div class="right-column">
+                {% if cv_data.summary %}
+                <section>
+                    <h2>CAREER SUMMARY</h2>
+                    <div class="content"><p>{{ cv_data.summary }}</p></div>
+                </section>
+                {% endif %}
+
+                {% if cv_data.education %}
+                <section>
+                    <h2>EDUCATION & QUALIFICATIONS</h2>
+                    <div class="content">{{ cv_data.education | markdown | safe }}</div>
+                </section>
+                {% endif %}
+                
+                {% if cv_data.certifications %}
+                <section>
+                    <h2>PROFESSIONAL DEVELOPMENT</h2>
+                    <div class="content">{{ cv_data.certifications | markdown | safe }}</div>
+                </section>
+                {% endif %}
+
+                {% if cv_data.skills or cv_data.technical_skills or cv_data.soft_skills %}
+                <section>
+                    <h2>SKILLS</h2>
+                    <div class="content">
+                        {% if cv_data.technical_skills %}{{ cv_data.technical_skills | markdown | safe }}{% endif %}
+                        {% if cv_data.soft_skills %}{{ cv_data.soft_skills | markdown | safe }}{% endif %}
+                        {% if cv_data.skills %}{{ cv_data.skills | markdown | safe }}{% endif %}
+                    </div>
+                </section>
+                {% endif %}
+                
+                 {% if cv_data.achievements %}
+                <section>
+                    <h2>AWARDS & ACHIEVEMENTS</h2>
+                    <div class="content">{{ cv_data.achievements | markdown | safe }}</div>
+                </section>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</body>
+</html> 
